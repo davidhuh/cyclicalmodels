@@ -25,7 +25,7 @@ library(glmmADMB)
 ########## Import Data ##########################
 
 library(RCurl)
-dash.csv <- getURL("https://raw.github.com/davidhuh/cyclicalmodels/master/exampleRcode.R")
+dash.csv <- getURL("https://raw.github.com/davidhuh/cyclicalmodels/master/dash.csv")
 dash.df <- read.csv(textConnection(dash.csv))
 
 

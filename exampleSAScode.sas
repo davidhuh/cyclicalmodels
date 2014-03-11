@@ -2,16 +2,15 @@
 ** Modeling Cyclical Patterns in Daily College Drinking Data with Many Zeroes **
 **                                                                            **
 ** Authors: Huh, D., Kaysen, D., & Atkins, D.C.                               **
-** Software: SAS 9                                                            **
+** Software: SAS 9.4                                                          **
 *******************************************************************************;
 
 options formdlim=' ' ls=90 ps=50 nofmterr;
 
 
 ********** Import Data **************************;
-proc import out= WORK.dash
-            datafile= "dash.csv"
-            dbms=CSV REPLACE;
+filename dashweb url 'https://raw.github.com/davidhuh/cyclicalmodels/master/dash.csv';
+proc import datafile=dashweb out=WORK.dash dbms=CSV;
      getnames=YES;
      datarow=2;
 run;
