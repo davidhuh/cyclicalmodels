@@ -43,7 +43,7 @@ dash.df <- within(dash.df, {
   cycPha <- sin(2*pi*(dayofwk/7))
   cycAmp <- cos(2*pi*(dayofwk/7))
   
-  ## Create saturated dummy variables
+  ## Create saturated set of dummy variables
   Tue <- as.numeric(dayofwk==1)
   Wed <- as.numeric(dayofwk==2)
   Thu <- as.numeric(dayofwk==3)
@@ -59,14 +59,16 @@ dash.cnt.df <- dash.df[!is.na(dash.df$y.cnt), ]
 
 ########## Multilevel Hurdle Negative Binomial Model -- No Time Predictors ########
 
-## Logistic submodel: Saturated dummy variables ###
+## Logistic submodel w/ Saturated set of dummy variables ###
+##  -- Random intercepts
 hunb.cyc.bin.0 <- glmmadmb(y.bin ~ Tue + Wed + Thu + Fri + Sat + Sun + (1|id),
                            data=dash.bin.df,
                            family="binomial",
                            corStruct="diag",
                            verbose = TRUE)
 
-### Truncated Negative Binomial (NB2) submodel: Cyclical variables ###
+### Truncated Negative Binomial (NB2) submodel w/ Cyclical variables ###
+##  -- Random intercepts and slopes
 hunb.cyc.cnt.0 <- glmmadmb(y.cnt ~ cycAmp + cycPha + (cycAmp + cycPha|id),
                            data=dash.cnt.df,
                            family="truncnbinom",
@@ -78,14 +80,14 @@ summary(hunb.cyc.bin.0); summary(hunb.cyc.cnt.0)
 
 ########## Multilevel Hurdle Negative Binomial Model -- with Time Predictor ######
 
-## Logistic submodel: Saturated dummy variables ###
+## Logistic submodel w/ Saturated dummy variables ###
 hunb.cyc.bin.1 <- glmmadmb(y.bin ~ dmqsoc*(Tue + Wed + Thu + Fri + Sat + Sun) + (1|id),
                            data=dash.bin.df,
                            family="binomial",
                            corStruct="diag",
                            verbose = TRUE)
 
-## Truncated Negative Binomial (NB2) submodel: Cyclical variables ###
+## Truncated Negative Binomial (NB2) submodel w/ Cyclical variables ###
 hunb.cyc.cnt.1 <- glmmadmb(y.cnt ~ dmqsoc*(cycAmp+cycPha) + (cycAmp+cycPha|id),
                            data=dash.cnt.df,
                            family="truncnbinom",
