@@ -2,7 +2,8 @@
 ## Modeling Cyclical Patterns in Daily College Drinking Data with Many Zeroes ##
 ##                                                                            ##
 ##  Authors: Huh, D., Kaysen, D., & Atkins, D.C.                              ##
-## Software: R 3.0.2                                                          ##
+## Software: R 3.1.3                                                          ##
+##  Updated: 09 April 2015
 ################################################################################
 
 ######## Install glmmADMB (if necessary) ########
@@ -22,11 +23,9 @@
 library(glmmADMB)
 
 
-########## Import Data ##########################
+########## Load Data ##########################
 
-library(RCurl)
-dash.csv <- getURL("https://raw.github.com/davidhuh/cyclicalmodels/master/dash.csv")
-dash.df <- read.csv(textConnection(dash.csv))
+dash.df <- read.csv("dash.csv")
 
 
 ########## Prepare Data for Analysis ############
